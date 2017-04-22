@@ -23,17 +23,20 @@
     			</thead>
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>
-	    				<spring:url value = "productDetails/${product.productId}" var="url" htmlEscape="true"/>
+	    				<spring:url value = "productInventory/productDetails/${product.productId}" var="infoUrl" htmlEscape="true"/>
+	    				<spring:url value = "productInventory/productDetails/deleteProduct/${product.productId}" var="deleteUrl" htmlEscape="true"/>
 	    				<td><img src = "#" alt = "image"/></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
 	    				<td>${product.productCondition}</td>
 	    				<td>${product.productPrice}</td>
 	    				<td>${product.productManufacturer}</td>
-	    				<td><a href = "${url}"><span class = "glyphicon glyphicon-info-sign"></span></a></td>	  						
+	    				<td><a href = "${infoUrl}"><span class = "glyphicon glyphicon-info-sign"></span></a>
+	    					<a href = "${deleteUrl}"><span class = "glyphicon glyphicon-remove"></span></a>
+	    				</td>	  						
 	    			</tr>
     			</c:forEach>
     		</table>
-    		<a href = "<spring:url value = "/admin/productInventory/addProduct" />" class = "btn btn-primary">Add product.</a>
+    		<a href = "<spring:url value = "/admin/productInventory/addProduct" />" class = "btn btn-primarymary">Add product.</a>
    <%@include file = "/WEB-INF/views/templates/footer.jsp" %>
     		

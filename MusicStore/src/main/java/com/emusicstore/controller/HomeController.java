@@ -25,7 +25,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/getProducts", method = RequestMethod.GET)
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String getProduct(Model model) {
 		List<Product> productList = productDao.getAllProduct();
 		model.addAttribute(productList);
@@ -37,13 +37,13 @@ public class HomeController {
 		return  "productDetail";
 	}
 	
-	@RequestMapping(value = "/productDetails/{productId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/products/productDetails/{productId}", method = RequestMethod.GET)
 	public String getProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
 		Product product = productDao.getProductById(productId);
 		model.addAttribute(product);
 		return "productDetail";
 	}
-	@RequestMapping(value = "admin/productDetails/{productId}", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/productInventory/productDetails/{productId}", method = RequestMethod.GET)
 	public String getAdminProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
 		Product product = productDao.getProductById(productId);
 		model.addAttribute(product);
@@ -79,4 +79,11 @@ public class HomeController {
 		productDao.addProduct(product);
 		return "redirect:/admin/productInventory";
 	}
+	
+	@RequestMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}", method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable("productId") String productId,Model model) {
+		productDao.deleteProduct(productId);
+		return "redirect:/admin/productInventory";
+	}
+	
 }

@@ -23,7 +23,7 @@
     			</thead>
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>
-	    				<spring:url value = "productDetails/${product.productId}" var="url" htmlEscape="true"/>
+	    				<spring:url value = "/products/productDetails/${product.productId}" var="url" htmlEscape="true"/>
 	    				<td><img src = "#" alt = "image"/></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
