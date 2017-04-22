@@ -4,9 +4,9 @@
     <div class="container-wrapper">
     	<div class = "container">
     		<div class = "page-header">
-    			<h1>All Products</h1>
+    			<h1>Product Inventory</h1>
     			
-    			<p class = "lead">Checkout all the awesome products available now.</p>
+    			<p class = "lead">Manage you product inventory.</p>
     		</div>
     		
     		<table class = "table table-striped tabel-hover">
@@ -34,5 +34,6 @@
 	    			</tr>
     			</c:forEach>
     		</table>
+    		<a href = "<spring:url value = "/admin/productInventory/addProduct" />" class = "btn btn-primary">Add product.</a>
    <%@include file = "/WEB-INF/views/templates/footer.jsp" %>
     		
