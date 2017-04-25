@@ -39,13 +39,13 @@ public class HomeController {
 	
 	@RequestMapping(value = "/products/productDetails/{productId}", method = RequestMethod.GET)
 	public String getProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
-		Product product = productDao.getProductById(productId);
+		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
 	}
 	@RequestMapping(value = "admin/productInventory/productDetails/{productId}", method = RequestMethod.GET)
 	public String getAdminProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
-		Product product = productDao.getProductById(productId);
+		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
 	}
@@ -82,7 +82,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable("productId") String productId,Model model) {
-		productDao.deleteProduct(productId);
+		productDao.deleteProduct(Integer.parseInt(productId));
 		return "redirect:/admin/productInventory";
 	}
 	
