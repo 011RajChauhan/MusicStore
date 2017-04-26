@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -90,5 +91,13 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 		 HibernateTransactionManager transactionManger = new HibernateTransactionManager(sessionFactory);
 		 
 		 return transactionManger;
+	 }
+	 
+	 @Bean(name = "multipartRsolver")
+	 public CommonsMultipartResolver mulitpartResolver() {
+		 CommonsMultipartResolver fileResolver = new CommonsMultipartResolver();
+		 fileResolver.setMaxUploadSize(1024000);
+		 return fileResolver;
+		 
 	 }
 }

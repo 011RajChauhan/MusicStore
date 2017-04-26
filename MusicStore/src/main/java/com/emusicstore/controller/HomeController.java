@@ -1,7 +1,12 @@
 package com.emusicstore.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.emusicstore.dao.ProductDao;
 import com.emusicstore.models.Product;
@@ -17,6 +23,7 @@ import com.emusicstore.models.Product;
 @Controller
 public class HomeController {
 	
+	private Path path;
 	@Autowired
 	private ProductDao productDao;
 	
@@ -75,8 +82,23 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.POST)
-	public String addProductInInventory(@ModelAttribute("product") Product product) {
+	public String addProductInInventory(@ModelAttribute("product") Product product, HttpServletRequest request) {
 		productDao.addProduct(product);
+		String saveDirectory = "E:/Test/Upload/";
+		MultipartFile productImage = product.getProductImage();
+		String rootDirectory = request.getSession().getServletContext().getContextPath();
+		path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		System.out.println(">>>>"+path.toString());
+		if(productImage != null && !productImage.isEmpty()) {
+			try{
+			productImage.transferTo(new File(saveDirectory+product.getProductId()));
+			System.out.println("saved successfully");
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("product image saving failed.");
+			}
+		}
+		
 		return "redirect:/admin/productInventory";
 	}
 	

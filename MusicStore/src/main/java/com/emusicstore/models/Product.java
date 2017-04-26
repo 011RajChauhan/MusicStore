@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
@@ -17,6 +20,8 @@ public class Product {
 	private double productPrice;
 	private int productUnitInStock;
 	private String productManufacturer;
+	
+	private MultipartFile productImage;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -74,6 +79,14 @@ public class Product {
 	}
 	public void setProductManufacturer(String productManufacturer) {
 		this.productManufacturer = productManufacturer;
+	}
+	
+	@Transient
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
 	}
 	
 	
