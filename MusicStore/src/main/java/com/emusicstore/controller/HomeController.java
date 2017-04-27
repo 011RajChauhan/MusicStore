@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.emusicstore.dao.ProductDao;
@@ -24,52 +24,53 @@ import com.emusicstore.models.Product;
 public class HomeController {
 	
 	private Path path;
+	
 	@Autowired
 	private ProductDao productDao;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping(value = "/")
 	public String home() {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/products", method = RequestMethod.GET)
+	@GetMapping(value = "/products")
 	public String getProduct(Model model) {
 		List<Product> productList = productDao.getAllProduct();
 		model.addAttribute(productList);
 		return "productList";
 	}
 	
-	@RequestMapping(value = "/viewProductDetails", method = RequestMethod.GET)
+	@GetMapping(value = "/viewProductDetails")
 	public String viewProductDetails() {
 		return  "productDetail";
 	}
 	
-	@RequestMapping(value = "/products/productDetails/{productId}", method = RequestMethod.GET)
+	@GetMapping(value = "/products/productDetails/{productId}")
 	public String getProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
 		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
 	}
-	@RequestMapping(value = "admin/productInventory/productDetails/{productId}", method = RequestMethod.GET)
+	@GetMapping(value = "admin/productInventory/productDetails/{productId}")
 	public String getAdminProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
 		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
 	}
 	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@GetMapping(value = "/admin")
 	public String admin() {
 		return "admin";
 	}
 	
-	@RequestMapping(value = "/admin/productInventory", method = RequestMethod.GET)
+	@GetMapping(value = "/admin/productInventory")
 	public String productInventory(Model model) {
 		List<Product> productList = productDao.getAllProduct();
 		model.addAttribute(productList);
 		return "productInventory";
 	}
-	
-	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.GET)
+		
+	@GetMapping(value = "/admin/productInventory/addProduct")
 	public String addProduct(Model model) {
 		Product product = new Product();
 		product.setProductCategory("instrument");
@@ -81,28 +82,33 @@ public class HomeController {
 		return "addProduct";
 	}
 	
-	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.POST)
-	public String addProductInInventory(@ModelAttribute("product") Product product, HttpServletRequest request) {
-		productDao.addProduct(product);
-		String saveDirectory = "E:/Test/Upload/";
-		MultipartFile productImage = product.getProductImage();
-		String rootDirectory = request.getSession().getServletContext().getContextPath();
-		path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
-		System.out.println(">>>>"+path.toString());
-		if(productImage != null && !productImage.isEmpty()) {
-			try{
-			productImage.transferTo(new File(saveDirectory+product.getProductId()));
-			System.out.println("saved successfully");
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("product image saving failed.");
-			}
-		}
+	@PostMapping(value = "/admin/productInventory/addProduct")
+	public String addProductInInventory(@ModelAttribute Product product, HttpServletRequest request) {
 		
+		productDao.addProduct(product);
+		
+		String uploads = "E:/eMusicStore/uploads/images/";
+		
+		MultipartFile productImage = product.getProductImage();
+		
+        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        /*path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");*/
+		System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+        
+        path = Paths.get(uploads +product.getProductName()+"_"+product.getProductId()+".png");
+        
+        if (productImage != null && !productImage.isEmpty()) {
+            try {
+                productImage.transferTo(new File(path.toString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Product image saving failed", e);
+            }
+        }
 		return "redirect:/admin/productInventory";
 	}
 	
-	@RequestMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}", method = RequestMethod.GET)
+	@GetMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") String productId,Model model) {
 		productDao.deleteProduct(Integer.parseInt(productId));
 		return "redirect:/admin/productInventory";

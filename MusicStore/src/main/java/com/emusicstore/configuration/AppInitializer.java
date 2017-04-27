@@ -4,12 +4,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -49,11 +49,11 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 	 @Bean(name = "dataSource")
 	 public DataSource getDataSource() {
 		 
-		 BasicDataSource dataSource = new BasicDataSource();
-		 dataSource.setDriverClassName("org.h2.Driver");
-		 dataSource.setUrl("jdbc:h2:tcp://localhost/~/test");
-		 dataSource.setUsername("sa");
-		 dataSource.setPassword("");
+		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		 dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		 dataSource.setUrl("jdbc:mysql://localhost:3306/mylocaldb");
+		 dataSource.setUsername("root");
+		 dataSource.setPassword("12345");
 		 
 		 return dataSource;
 	 }
@@ -74,7 +74,7 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 	 private Properties getHibernateProperties() {
 		 
 		 Properties properties = new Properties();
-		 properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+		 properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		 properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		 properties.setProperty("hibernate.show_sql", "true");
 		 properties.setProperty("hibernate.format_sql", "true");
@@ -93,7 +93,7 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 		 return transactionManger;
 	 }
 	 
-	 @Bean(name = "multipartRsolver")
+	 @Bean(name = "multipartResolver")
 	 public CommonsMultipartResolver mulitpartResolver() {
 		 CommonsMultipartResolver fileResolver = new CommonsMultipartResolver();
 		 fileResolver.setMaxUploadSize(1024000);

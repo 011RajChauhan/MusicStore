@@ -21,6 +21,7 @@ public class Product {
 	private int productUnitInStock;
 	private String productManufacturer;
 	
+	
 	private MultipartFile productImage;
 	
 	@Id
@@ -87,8 +88,6 @@ public class Product {
 	}
 	public void setProductImage(MultipartFile productImage) {
 		this.productImage = productImage;
-	}
-	
-	
+	}	
 	
 }

@@ -9,7 +9,7 @@
     			<p class = "lead">Fill the form below to add a new product.</p>
     		</div>
     		
-    		<form:form action = "${pageContext.request.contextPath}/admin/productInventory/addProduct" method = "POST" modelAttribute="product" enctype="multipart/form-data">
+    		<form:form action = "${pageContext.request.contextPath}/admin/productInventory/addProduct" method = "POST" modelAttribute = "product" enctype="multipart/form-data">
     			
     			<div class  = "form-group">
     				<label for = "name">Name</label>
@@ -76,9 +76,9 @@
     				<form:input path = "productManufacturer" id = "manufacturer" class = "form-control"></form:input>
     			</div>
     			
-    			<div>
-    				<label class = "control-label" for = "productImage" >Upload picture</label>
-    				<form:input id = "productImage" path = "productImage" type = "file" class = "form:input-large"/>
+    			<div class = "form-group">
+    				<label class = "control-label" for = "productImage">Upload Picture</label>
+    				<form:input path="productImage" id = "productImage" type = "file" class = "form:input-large"/>
     			</div>
     			<br><br>
     			
