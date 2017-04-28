@@ -91,11 +91,11 @@ public class HomeController {
 		
 		MultipartFile productImage = product.getProductImage();
 		
-        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-        /*path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");*/
-		System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+        /*String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");*/
         
-        path = Paths.get(uploads +product.getProductName()+"_"+product.getProductId()+".png");
+        path = Paths.get(uploads +product.getProductId()+".png");
         
         if (productImage != null && !productImage.isEmpty()) {
             try {
