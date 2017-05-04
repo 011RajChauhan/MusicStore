@@ -86,14 +86,16 @@ public class HomeController {
 	public String addProductInInventory(@ModelAttribute Product product, HttpServletRequest request) {
 		
 		productDao.addProduct(product);
-		
+		/*----------------------------------------------------------------------------------------------------------------
+		 * upload file to local file system
+		 */
 		String uploads = "E:/eMusicStore/uploads/images/";
 		
 		MultipartFile productImage = product.getProductImage();
 		
-        /*String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
         path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
-		System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");*/
+		System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
         
         path = Paths.get(uploads +product.getProductId()+".png");
         
@@ -105,6 +107,29 @@ public class HomeController {
                 throw new RuntimeException("Product image saving failed", e);
             }
         }
+       
+		
+		/*-----------------------------------------------------------------------------------------------------------------
+		 * uploding file to webapp could not be achieved as don'nt know how to change output directory
+		 * 
+		 * MultipartFile productImage = product.getProductImage();
+		
+	        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+	        path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+			System.out.println(rootDirectory + "\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+	        
+	        path = Paths.get(uploads +product.getProductId()+".png");
+	        
+	        if (productImage != null && !productImage.isEmpty()) {
+	            try {
+	                productImage.transferTo(new File(path.toString()));
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                throw new RuntimeException("Product image saving failed", e);
+	            }
+	        }
+      		------------------------------------------------------------------------------------------------------------------
+        */
 		return "redirect:/admin/productInventory";
 	}
 	

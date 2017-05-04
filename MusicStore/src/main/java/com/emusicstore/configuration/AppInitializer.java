@@ -41,7 +41,12 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 	
 	 @Override
      public void addResourceHandlers(ResourceHandlerRegistry registry) {
-           registry.addResourceHandler("/resources/**").addResourceLocations("WEB-INF/resources/");
+           registry.addResourceHandler("/resources/**")
+           .addResourceLocations("WEB-INF/resources/");
+           
+           registry
+           .addResourceHandler("/images/**")
+           .addResourceLocations("file:e:E://eMusicStore//uploads//images");
      }
 	 
 	 /*creating a BasicDataSource data source*/
