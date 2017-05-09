@@ -25,7 +25,8 @@
 	    			<tr>
 	    				<spring:url value = "productInventory/productDetails/${product.productId}" var="infoUrl" htmlEscape="true"/>
 	    				<spring:url value = "productInventory/productDetails/deleteProduct/${product.productId}" var="deleteUrl" htmlEscape="true"/>
-	    				<td><img src = "<c:url value = "/resources/images/${product.productId}.png" /> " alt = "image" style="width: 100%;height: 300px;" /></td>
+	    				<spring:url value = "productInventory/productDetails/editProduct/${product.productId }" var = "editUrl" htmlEscape="true"/>
+	    				<td><img src = "<c:url value = "/resources/images/${product.productId}.png" /> " alt = "image" style="width: 50%;height: 150px;" /></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
 	    				<td>${product.productCondition}</td>
@@ -33,6 +34,7 @@
 	    				<td>${product.productManufacturer}</td>
 	    				<td><a href = "${infoUrl}"><span class = "glyphicon glyphicon-info-sign"></span></a>
 	    					<a href = "${deleteUrl}"><span class = "glyphicon glyphicon-remove"></span></a>
+	    					<a href = "${editUrl}"><span class = "glyphicon glyphicon-pencil"></span></a>
 	    				</td>	  						
 	    			</tr>
     			</c:forEach>

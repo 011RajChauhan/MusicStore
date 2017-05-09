@@ -34,13 +34,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">eMusicStore</a>
+              <a class="navbar-brand" href="/MusicStore">eMusicStore</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="<c:url value = "/" />">Home</a></li>
                 <li><a href="<c:url value = "/products" />">Products</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="<c:url value = "/admin" />">Admin</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
