@@ -25,7 +25,7 @@
 	    			<tr>
 	    				<spring:url value = "productInventory/productDetails/${product.productId}" var="infoUrl" htmlEscape="true"/>
 	    				<spring:url value = "productInventory/productDetails/deleteProduct/${product.productId}" var="deleteUrl" htmlEscape="true"/>
-	    				<td><img src = "#" alt = "image"/></td>
+	    				<td><img src = "<c:url value = "/resources/images/${product.productId}.png" /> " alt = "image" style="width: 100%;height: 300px;" /></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
 	    				<td>${product.productCondition}</td>

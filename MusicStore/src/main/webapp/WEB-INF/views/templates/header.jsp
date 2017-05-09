@@ -16,6 +16,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<c:url value = "/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+    <!-- main css file -->
+    <link href="<c:url value = "/resources/css/man.css"/>" rel="stylesheet">
 
     
   </head>

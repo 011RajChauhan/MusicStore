@@ -2,6 +2,7 @@ package com.emusicstore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -102,7 +103,18 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}")
-	public String deleteProduct(@PathVariable("productId") String productId,Model model) {
+	public String deleteProduct(@PathVariable("productId") String productId,Model model,HttpServletRequest request) {
+		
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/")+"\\WEB-INF\\resources\\images\\";
+		Path path = Paths.get(rootDirectory+productId+".png");
+		
+		if(Files.exists(path)) {
+			try{
+				Files.delete(path);
+			}catch(IOException ie) {
+				ie.printStackTrace();
+			}
+		}
 		productDao.deleteProduct(Integer.parseInt(productId));
 		return "redirect:/admin/productInventory";
 	}
