@@ -14,6 +14,7 @@
     			<div class  = "form-group">
     				<label for = "name">Name</label>
     				<form:input path = "productName" id = "name" class = "form-control"></form:input>
+    				<form:hidden path="productId" name = "productId"/>
     			</div>
     			
     			<div class  = "form-group">
