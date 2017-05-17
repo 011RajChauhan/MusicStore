@@ -8,10 +8,12 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,8 +86,11 @@ public class HomeController {
 	}
 	
 	@PostMapping(value = "/admin/productInventory/addProduct")
-	public String addProductInInventory(@ModelAttribute Product product, HttpServletRequest request) {
+	public String addProductInInventory(@Valid @ModelAttribute Product product,BindingResult result, HttpServletRequest request) {
 		
+		if(result.hasErrors()) {
+			return "addProduct";
+		}
 		productDao.addProduct(product);
 		MultipartFile productImage = product.getProductImage();
 		
@@ -127,9 +132,12 @@ public class HomeController {
 	}
 	
 	@PostMapping(value = "/admin/productInventory/productDetails/editProduct")
-	public String savedEditedProduct(@ModelAttribute Product product, HttpServletRequest request) {
+	public String savedEditedProduct(@Valid @ModelAttribute Product product,BindingResult result, HttpServletRequest request) {
 MultipartFile productImage = product.getProductImage();
 		
+		if(result.hasErrors()) {
+			return "addProduct";
+		}
 		productDao.editProduct(product);
         String rootDirectory = request.getSession().getServletContext().getRealPath("/")+"\\WEB-INF\\resources\\images\\";
         

@@ -12,7 +12,7 @@
     		<form:form action = "${pageContext.request.contextPath}/admin/productInventory/addProduct" method = "POST" modelAttribute = "product" enctype="multipart/form-data">
     			
     			<div class  = "form-group">
-    				<label for = "name">Name</label>
+    				<label for = "name">Name</label><br><form:errors path = "productName" cssStyle="color:#ff0000"/>
     				<form:input path = "productName" id = "name" class = "form-control"></form:input>
     			</div>
     			
@@ -33,12 +33,12 @@
     			</div>
     			
     			<div class  = "form-group">
-    				<label for = "description">Description</label>
+    				<label for = "description">Description</label><br><form:errors path = "productDescription" cssStyle="color:#ff0000"/>
     				<form:textarea path = "productDescription" id = "description" class = "form-control"></form:textarea>
     			</div>
     			
     			<div class  = "form-group">
-    				<label for = "price">Price</label>
+    				<label for = "price">Price</label><br><form:errors path = "productPrice" cssStyle="color:#ff0000"/>
     				<form:input path = "productPrice" id = "price" class = "form-control"></form:input>
     			</div>
     			
@@ -67,17 +67,17 @@
     			</div>
     			
     			<div class  = "form-group">
-    				<label for = "units">Units</label>
+    				<label for = "units">Units</label><br><form:errors path = "productUnitInStock" cssStyle="color:#ff0000"/>
     				<form:input path = "productUnitInStock" id = "units" class = "form-control"></form:input>
     			</div>
     			
     			<div class  = "form-group">
-    				<label for = "manufacturer">Manufucturer</label>
+    				<label for = "manufacturer">Manufucturer</label><br><form:errors path = "productManufacturer" cssStyle="color:#ff0000"/>
     				<form:input path = "productManufacturer" id = "manufacturer" class = "form-control"></form:input>
     			</div>
     			
     			<div class = "form-group">
-    				<label class = "control-label" for = "productImage">Upload Picture</label>
+    				<label class = "control-label" for = "productImage">Upload Picture</label><br><form:errors path = "productImage" cssStyle="color:#ff0000"/>
     				<form:input path="productImage" id = "productImage" type = "file" class = "form:input-large"/>
     			</div>
     			<br><br>

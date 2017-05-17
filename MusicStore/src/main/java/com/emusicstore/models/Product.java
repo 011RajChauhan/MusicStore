@@ -5,23 +5,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
 	
 	private int productId;
+	@NotEmpty(message = "product name cannot be empty.")
 	private String productName;
 	private String productCategory;
+	@NotEmpty(message = "please give some description about the product.")
 	private String productDescription;
 	private String productCondition;
 	private String productStatus;
+	@Min(value = 0, message = "product price cannot be less then 0.")
 	private double productPrice;
+	@Min(value = 0, message = "prouduct stock cannot be less then 0.")
 	private int productUnitInStock;
+	@NotEmpty(message = "product manufacturer name is necessary.")
 	private String productManufacturer;
 	
-	
+	@NotNull(message = "please upload product image.")
 	private MultipartFile productImage;
 	
 	@Id
