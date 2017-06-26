@@ -4,9 +4,9 @@
     <div class="container-wrapper">
     	<div class = "container">
     		<div class = "page-header">
-    			<h1>Administrator page</h1>
+    			<h1>Administrator page 	|	<a href = "<c:url value = "/logout"/> ">Logout</a></h1>
     			
-    			<p class = "lead">This is the administrator page.</p>
+    			<p class = "lead">Welcome Admin.</p>
     		</div>
     		<h3>
     			<a href = "<c:url value =  "/admin/productInventory" />">Manage Product Inventory</a>
