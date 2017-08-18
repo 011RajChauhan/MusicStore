@@ -17,17 +17,25 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests()
-			.antMatchers("/").permitAll()
+			.antMatchers("/","/home").permitAll()
 			.antMatchers("/admin/**").access("hasRole('ADMIN')")
-			.and().formLogin().loginPage("/login")
+			.and().formLogin().loginPage("/login").failureUrl("/login?error")
 			.usernameParameter("username").passwordParameter("password")
 			.and().csrf()
+			.and()
+			.logout().logoutSuccessUrl("/login?logout")
 			.and().exceptionHandling().accessDeniedPage("/accessDenied");
 		}
 		
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			
-			auth.inMemoryAuthentication().withUser("rajan").password("chauhan").roles("ADMIN");	
+			// in memory authentication
+			//auth.inMemoryAuthentication().withUser("rajan").password("chauhan").roles("ADMIN");
+			
+			//jdbc authentication
+			auth.jdbcAuthentication().dataSource(dataSource)
+				.usersByUsernameQuery("select username, password, enabled from users where username = ?")
+					.authoritiesByUsernameQuery("select username, role from user_role where username = ?");
 		}
 }

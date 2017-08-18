@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +41,8 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/admin")
-	public String admin() {
+	public String admin(Model model) {
+		model.addAttribute("username",getUserName());
 		return "admin";
 	}
 	
@@ -128,5 +131,18 @@ MultipartFile productImage = product.getProductImage();
         }
         
 		return "redirect:/admin/productInventory";
+	}
+	
+	private String getUserName() {
+		String userName = null;
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(principal instanceof UserDetails) {
+			userName = ((UserDetails)principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 }

@@ -6,7 +6,7 @@
     		<div class = "page-header">
     			<h1>Administrator page 	|	<a href = "<c:url value = "/logout"/> ">Logout</a></h1>
     			
-    			<p class = "lead">Welcome Admin.</p>
+    			<p class = "lead">Welcome ${username}.</p>
     		</div>
     		<h3>
     			<a href = "<c:url value =  "/admin/productInventory" />">Manage Product Inventory</a>

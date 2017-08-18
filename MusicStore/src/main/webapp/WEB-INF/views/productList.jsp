@@ -19,7 +19,7 @@
     					<th>price</th>
     					<th>manufacturer</th>
     					<th></th>
-    				</tr>
+    				</tr>	
     			</thead>
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>

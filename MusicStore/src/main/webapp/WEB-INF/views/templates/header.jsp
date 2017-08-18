@@ -42,7 +42,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li><a href="<c:url value = "/" />" >Home</a></li>
+                <li><a href="<c:url value = "/home" />" >Home</a></li>
                 <li><a href="<c:url value = "/products" />" >Products</a></li>
                 <li><a href="<c:url value = "#" /> ">Contact</a></li>
               </ul>

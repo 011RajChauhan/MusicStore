@@ -18,7 +18,7 @@ public class HomeController {
 	@Autowired
 	private ProductDao productDao;
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = {"/","/home"})
 	public String home() {
 		return "home";
 	}
