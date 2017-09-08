@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,13 +19,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests()
 			.antMatchers("/","/home").permitAll()
-			.antMatchers("/admin/**").access("hasRole('ADMIN')")
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.and().formLogin().loginPage("/login").failureUrl("/login?error")
 			.usernameParameter("username").passwordParameter("password")
 			.and().csrf()
 			.and()
 			.logout().logoutSuccessUrl("/login?logout")
 			.and().exceptionHandling().accessDeniedPage("/accessDenied");
+			http.csrf().disable();
 		}
 		
 		@Override

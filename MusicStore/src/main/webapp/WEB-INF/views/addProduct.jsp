@@ -1,5 +1,6 @@
 <%@taglib prefix = "form" uri = "http://www.springframework.org/tags/form" %>
 <%@taglib prefix = "spring" uri = "http://www.springframework.org/tags" %>
+<%@taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/views/templates/header.jsp" %>
     <div class="container-wrapper">
     	<div class = "container">
@@ -8,7 +9,6 @@
     			
     			<p class = "lead">Fill the form below to add a new product.</p>
     		</div>
-    		
     		<form:form action = "${pageContext.request.contextPath}/admin/productInventory/addProduct" method = "POST" modelAttribute = "product" enctype="multipart/form-data">
     			
     			<div class  = "form-group">
@@ -81,7 +81,7 @@
     				<form:input path="productImage" id = "productImage" type = "file" class = "form:input-large"/>
     			</div>
     			<br><br>
-    			
+<%--     			<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> --%>
     			<input type = "submit" value = "submit" class = "btn btn-primary"/>
     			<a href = "<c:url value = "/admin/productInventory" />" class = "btn btn-default">Cancel</a>
     		</form:form>

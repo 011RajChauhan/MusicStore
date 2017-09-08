@@ -10,7 +10,6 @@
     		</div>
     		
     		<table class = "table table-striped tabel-hover">
-    			<thead>
     				<tr class = "bg-success">
     					<th>photo</th>
     					<th>name</th>
@@ -20,7 +19,6 @@
     					<th>manufacturer</th>
     					<th></th>
     				</tr>	
-    			</thead>
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>
 	    				<spring:url value = "/products/productDetails/${product.productId}" var="url" htmlEscape="true"/>

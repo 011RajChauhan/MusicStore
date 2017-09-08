@@ -16,10 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.emusicstore.dao.ProductDao;
@@ -28,32 +28,33 @@ import com.emusicstore.models.Product;
 @Controller
 public class AdminController {
 	
+	@SuppressWarnings("unused")
 	private Path path;
 	
 	@Autowired
 	ProductDao productDao;
 	
-	@GetMapping(value = "admin/productInventory/productDetails/{productId}")
+	@RequestMapping(value = "admin/productInventory/productDetails/{productId}", method = RequestMethod.GET)
 	public String getAdminProductDetails(@PathVariable("productId") String productId, Model model) throws IOException {
 		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
 	}
 	
-	@GetMapping(value = "/admin")
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model) {
 		model.addAttribute("username",getUserName());
 		return "admin";
 	}
 	
-	@GetMapping(value = "/admin/productInventory")
+	@RequestMapping(value = "/admin/productInventory", method = RequestMethod.GET)
 	public String productInventory(Model model) {
 		List<Product> productList = productDao.getAllProduct();
 		model.addAttribute(productList);
 		return "productInventory";
 	}
 		
-	@GetMapping(value = "/admin/productInventory/addProduct")
+	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.GET)
 	public String addProduct(Model model) {
 		Product product = new Product();
 		product.setProductCategory("instrument");
@@ -65,7 +66,7 @@ public class AdminController {
 		return "addProduct";
 	}
 	
-	@PostMapping(value = "/admin/productInventory/addProduct")
+	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.POST)
 	public String addProductInInventory(@Valid @ModelAttribute Product product,BindingResult result, HttpServletRequest request) {
 		
 		if(result.hasErrors()) {
@@ -75,10 +76,10 @@ public class AdminController {
 		MultipartFile productImage = product.getProductImage();
 		
         String rootDirectory = request.getSession().getServletContext().getRealPath("/")+"\\WEB-INF\\resources\\images\\";
-        
+        System.out.println(request.getSession().getServletContext().getRealPath("/"));
         if (productImage != null && !productImage.isEmpty()) {
             try {
-                productImage.transferTo(new File(rootDirectory+product.getProductId()+".png"));
+                productImage.transferTo(new File(rootDirectory+product.getProductName()+"_"+product.getProductId()+".png"));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Product image saving failed", e);
@@ -87,7 +88,7 @@ public class AdminController {
 		return "redirect:/admin/productInventory";
 	}
 	
-	@GetMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}")
+	@RequestMapping(value = "/admin/productInventory/productDetails/deleteProduct/{productId}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable("productId") String productId,Model model,HttpServletRequest request) {
 		
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/")+"\\WEB-INF\\resources\\images\\";
@@ -104,14 +105,14 @@ public class AdminController {
 		return "redirect:/admin/productInventory";
 	}
 	
-	@GetMapping(value = "/admin/productInventory/productDetails/editProduct/{productId}")
+	@RequestMapping(value = "/admin/productInventory/productDetails/editProduct/{productId}", method = RequestMethod.GET)
 	public String editProduct(@PathVariable("productId") String productId, Model model, HttpServletRequest request) {
 		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute("product",product);
 		return "editProduct";
 	}
 	
-	@PostMapping(value = "/admin/productInventory/productDetails/editProduct")
+	@RequestMapping(value = "/admin/productInventory/productDetails/editProduct", method = RequestMethod.POST)
 	public String savedEditedProduct(@Valid @ModelAttribute Product product,BindingResult result, HttpServletRequest request) {
 MultipartFile productImage = product.getProductImage();
 		

@@ -26,9 +26,8 @@
 					<input type = "password" id = "password" name = "password" class = "form-control"/>
 				</div>
 				
+<%-- 				<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> --%>
 				<input type = "submit" value = "submit" class = "btn btn-default"/>
-				
-				<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 			</form>
 			</div>
 		</div>
