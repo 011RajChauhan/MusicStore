@@ -9,7 +9,7 @@
     			<p class = "lead">Welcome ${username}.</p>
     		</div>
     		<h3>
-    			<a href = "<c:url value =  "/admin/productInventory" />">Manage Product Inventory</a>
+    			<a href = "<c:url value =  "admin/product/productInventory" />">Manage Product Inventory</a>
     		</h3>
    <%@include file = "/WEB-INF/views/templates/footer.jsp" %>
     		

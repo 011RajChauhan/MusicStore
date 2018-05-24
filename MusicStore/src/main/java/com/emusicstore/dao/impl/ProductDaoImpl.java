@@ -38,20 +38,21 @@ public class ProductDaoImpl implements ProductDao{
 	}
 
 	@Override
-	public List<Product> getAllProduct() {
+	public List<Product> getProductList() {
 		
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Product");
 		List<Product> products = query.list();
 		session.flush();
+		
 		return products;
 	}
 
 	@Override
-	public void deleteProduct(int id) {
+	public void deleteProduct(Product product) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		session.delete(getProductById(id));
+		session.delete(product);
 		session.flush();
 	}
 

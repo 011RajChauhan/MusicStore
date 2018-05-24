@@ -1,4 +1,4 @@
-package com.emusicstore.configuration;
+ package com.emusicstore.configuration;
 
 import javax.sql.DataSource;
 
@@ -20,6 +20,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			http.authorizeRequests()
 			.antMatchers("/","/home").permitAll()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/customer/**").access("hasRole('ROLE_USER')")
 			.and().formLogin().loginPage("/login").failureUrl("/login?error")
 			.usernameParameter("username").passwordParameter("password")
 			.and().csrf()
@@ -38,6 +39,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			//jdbc authentication
 			auth.jdbcAuthentication().dataSource(dataSource)
 				.usersByUsernameQuery("select username, password, enabled from users where username = ?")
-					.authoritiesByUsernameQuery("select username, role from user_role where username = ?");
+					.authoritiesByUsernameQuery("select username, authority from authorities where username = ?");
 		}
 }

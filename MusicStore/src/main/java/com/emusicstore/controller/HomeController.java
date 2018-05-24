@@ -1,23 +1,21 @@
 package com.emusicstore.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.emusicstore.dao.ProductDao;
 import com.emusicstore.models.Product;
+import com.emusicstore.services.ProductService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductService productService;
 	
 	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
 	public String home() {
@@ -26,12 +24,12 @@ public class HomeController {
 	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String getProduct(Model model) {
-		List<Product> productList = productDao.getAllProduct();
+		List<Product> productList = productService.getProductList();
 		model.addAttribute(productList);
 		return "productList";
 	}
 	
-	@RequestMapping(value = "/viewProductDetails", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/viewProductDetails", method = RequestMethod.GET)
 	public String viewProductDetails() {
 		return  "productDetail";
 	}
@@ -41,6 +39,6 @@ public class HomeController {
 		Product product = productDao.getProductById(Integer.parseInt(productId));
 		model.addAttribute(product);
 		return "productDetail";
-	}
+	}*/
 	
 }

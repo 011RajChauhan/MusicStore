@@ -20,7 +20,17 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.emusicstore.dao.CartDao;
+import com.emusicstore.dao.impl.CartDaoImpl;
+import com.emusicstore.models.Authorities;
+import com.emusicstore.models.BillingAddress;
+import com.emusicstore.models.Cart;
+import com.emusicstore.models.CartItem;
+import com.emusicstore.models.Customer;
+import com.emusicstore.models.CustomerOrder;
 import com.emusicstore.models.Product;
+import com.emusicstore.models.ShippingAddress;
+import com.emusicstore.models.Users;
 
 @Configuration
 @EnableWebMvc
@@ -42,11 +52,7 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 	 @Override
      public void addResourceHandlers(ResourceHandlerRegistry registry) {
            registry.addResourceHandler("/resources/**")
-           .addResourceLocations("WEB-INF/resources/");
-           
-           /*registry
-           .addResourceHandler("/images/**")
-           .addResourceLocations("file:e:E://eMusicStore//uploads//images");*/
+           .addResourceLocations("/WEB-INF/resources/");
      }
 	 
 	 /*creating a BasicDataSource data source*/
@@ -72,7 +78,14 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 		 LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 		 sessionBuilder.addProperties(getHibernateProperties());
 		 sessionBuilder.addAnnotatedClasses(Product.class);
-		 
+		 sessionBuilder.addAnnotatedClasses(CartItem.class);
+		 sessionBuilder.addAnnotatedClasses(Cart.class);
+		 sessionBuilder.addAnnotatedClasses(Customer.class);
+		 sessionBuilder.addAnnotatedClasses(BillingAddress.class);
+		 sessionBuilder.addAnnotatedClasses(ShippingAddress.class);
+		 sessionBuilder.addAnnotatedClasses(Users.class);
+		 sessionBuilder.addAnnotatedClasses(Authorities.class);
+		 sessionBuilder.addAnnotatedClasses(CustomerOrder.class);
 		 return sessionBuilder.buildSessionFactory();
 	 }
 	 

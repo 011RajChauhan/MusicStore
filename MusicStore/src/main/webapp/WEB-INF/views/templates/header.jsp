@@ -13,14 +13,15 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>eMusicStore</title>
-
+	<!--Angular JS Controller -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="<c:url value = "/resources/css/bootstrap.min.css"/>" rel="stylesheet">
     <!-- main css file -->
-    <link href="<c:url value = "/resources/css/main.css"/>" rel="stylesheet">
+   <!--  <link href="<c:url value = "/resources/css/main.css"/>" rel="stylesheet">  -->
 	<!-- crousel css file -->
     <link href="<c:url value = "/resources/css/carousel.css"/>" rel="stylesheet">
-	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/controller.js"></script>
     
   </head>
 <!-- NAVBAR
@@ -43,7 +44,7 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="<c:url value = "/home" />" >Home</a></li>
-                <li><a href="<c:url value = "/products" />" >Products</a></li>
+                <li><a href="<c:url value = "/product/productList" />" >Products</a></li>
                 <li><a href="<c:url value = "#" /> ">Contact</a></li>
               </ul>
               <ul class = "nav navbar-nav pull-right">

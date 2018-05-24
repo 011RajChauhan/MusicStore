@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +20,125 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.emusicstore.dao.ProductDao;
 import com.emusicstore.models.Product;
+import com.emusicstore.services.ProductService;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 	
-	@SuppressWarnings("unused")
+	@Autowired
+	private ProductService productService;
+	
+	private Path path;
+	
+	@RequestMapping
+	public String adminPage() {
+		return "admin";
+	}
+	
+	@RequestMapping("/product/productInventory")
+	public String productInventory(Model model) {
+		List<Product> products = productService.getProductList();
+		model.addAttribute("productList", products);
+		return "productInventory";
+	}
+	
+	@RequestMapping("/product/addProduct")
+	public String getAddProductForm(Model model) {
+		model.addAttribute("product", getProductDefaultValues());
+		return "addProduct";
+	}
+	
+	@RequestMapping(value = "/product/addProduct", method = RequestMethod.POST)
+	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, HttpServletRequest request) {
+		
+		if(result.hasErrors()) {
+			return "addProduct";
+		}
+		
+		productService.addProduct(product);
+		
+		MultipartFile productImage = product.getProductImage();
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+		path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		
+		if(productImage != null && !productImage.isEmpty()) {
+			try {
+				productImage.transferTo(new File(path.toString()));
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("product image saving failed "+e);
+			}
+		}
+		
+		return "redirect:/admin/product/productInventory";
+	}
+	
+	
+	@RequestMapping(value = "/product/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable("productId") String productId, HttpServletRequest request) {
+		
+		Product product = productService.getProductById(Integer.valueOf(productId));
+		
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+		path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		
+		if(Files.exists(path)) {
+			try {
+				Files.delete(path);
+			}catch(IOException ioe) {
+				System.out.println("error deleting image for the product, product cannot be deleted.");
+				ioe.printStackTrace();
+			}
+		}
+		productService.deleteProduct(product);
+		return "redirect:/admin/product/productInventory";
+	}
+	
+	@RequestMapping(value = "/product/editProduct/{productId}")
+	public String editProduct(@PathVariable("productId") int productId, Model model) {
+		model.addAttribute("product", productService.getProductById(productId));
+		return "editProduct";
+	}
+	
+	@RequestMapping(value = "/product/editProduct", method = RequestMethod.POST)
+	public String editProduct(@Valid @ModelAttribute Product product, BindingResult result, HttpServletRequest request) {
+		if(result.hasErrors()) {
+			return "editProduct";
+		}
+		MultipartFile productImage = product.getProductImage();
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+		Path path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		if(!productImage.isEmpty() && productImage != null) {
+			try {
+				productImage.transferTo(new File(path.toString()));
+				
+			}catch(Exception e) {
+				System.out.println("image update failed");
+				e.printStackTrace();
+			}
+		}
+		productService.editProduct(product);
+		return "redirect:/admin/product/productInventory";
+	}
+	@RequestMapping("/customer")
+	public String customerManagement() {
+		//to add some customer servies later.
+		return "customerManagement";
+	}
+	
+	private Product getProductDefaultValues() {
+		
+		Product product = new Product();
+		product.setProductCondition("New");
+		product.setProductPrice(0);
+		product.setProductStatus("In Stock");
+		product.setProductUnitInStock(1);
+		
+		return product;
+	}
+	/*@SuppressWarnings("unused")
 	private Path path;
 	
 	@Autowired
@@ -79,7 +189,7 @@ public class AdminController {
         System.out.println(request.getSession().getServletContext().getRealPath("/"));
         if (productImage != null && !productImage.isEmpty()) {
             try {
-                productImage.transferTo(new File(rootDirectory+product.getProductName()+"_"+product.getProductId()+".png"));
+                productImage.transferTo(new File(rootDirectory+product.getProductId()+".png"));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Product image saving failed", e);
@@ -145,5 +255,5 @@ MultipartFile productImage = product.getProductImage();
 			userName = principal.toString();
 		}
 		return userName;
-	}
+	}*/
 }

@@ -23,9 +23,14 @@
     			</thead>
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>
-	    				<spring:url value = "productInventory/productDetails/${product.productId}" var="infoUrl" htmlEscape="true"/>
-	    				<spring:url value = "productInventory/productDetails/deleteProduct/${product.productId}" var="deleteUrl" htmlEscape="true"/>
-	    				<spring:url value = "productInventory/productDetails/editProduct/${product.productId }" var = "editUrl" htmlEscape="true"/>
+	    			
+	    				<!-- have to check this issue that why
+	    				on removing forward slash from spring:url tag /admin/product/product/productDetails/4
+	    				to the url -->
+	    				
+	    				<spring:url value = "/product/productDetails/${product.productId}" var="infoUrl" />
+	    				<spring:url value = "/admin/product/deleteProduct/${product.productId}" var="deleteUrl" htmlEscape="true"/>
+	    				<spring:url value = "/admin/product/editProduct/${product.productId }" var = "editUrl" htmlEscape="true"/>
 	    				<td><img src = "<c:url value = "/resources/images/${product.productId}.png" /> " alt = "image" style="width: 50%;height: 150px;" /></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
@@ -39,6 +44,6 @@
 	    			</tr>
     			</c:forEach>
     		</table>
-    		<a href = "<spring:url value = "/admin/productInventory/addProduct" />" class = "btn btn-primarymary">Add product.</a>
+    		<a href = "<spring:url value = "/admin/product/addProduct" />" class = "btn btn-primary">Add product</a>
    <%@include file = "/WEB-INF/views/templates/footer.jsp" %>
     		

@@ -1,9 +1,15 @@
 package com.emusicstore.models;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -11,29 +17,52 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Product {
+public class Product implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8820512641804272730L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO )
 	private int productId;
+	
 	@NotEmpty(message = "product name cannot be empty.")
 	private String productName;
+	
 	private String productCategory;
+	
 	@NotEmpty(message = "please give some description about the product.")
 	private String productDescription;
+	
 	private String productCondition;
+	
 	private String productStatus;
+	
 	@Min(value = 0, message = "product price cannot be less then 0.")
 	private double productPrice;
+	
 	@Min(value = 0, message = "prouduct stock cannot be less then 0.")
 	private int productUnitInStock;
+	
 	@NotEmpty(message = "product manufacturer name is necessary.")
 	private String productManufacturer;
 	
+	@Transient
 	@NotNull(message = "please upload product image.")
 	private MultipartFile productImage;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private List<CartItem> cartItemList;
+	
+	/*@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)*/
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -90,12 +119,18 @@ public class Product {
 		this.productManufacturer = productManufacturer;
 	}
 	
-	@Transient
+	
 	public MultipartFile getProductImage() {
 		return productImage;
 	}
 	public void setProductImage(MultipartFile productImage) {
 		this.productImage = productImage;
+	}
+	public List<CartItem> getCartItemList() {
+		return cartItemList;
+	}
+	public void setCartItemList(List<CartItem> cartItemList) {
+		this.cartItemList = cartItemList;
 	}	
 	
 }

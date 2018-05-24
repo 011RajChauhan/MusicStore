@@ -9,8 +9,9 @@
     			<p class = "lead">Checkout all the awesome products available now.</p>
     		</div>
     		
-    		<table class = "table table-striped tabel-hover">
-    				<tr class = "bg-success">
+    		<table class="table table-striped table-hover">
+            <thead>
+            <tr class="bg-success">
     					<th>photo</th>
     					<th>name</th>
     					<th>category</th>
@@ -18,11 +19,13 @@
     					<th>price</th>
     					<th>manufacturer</th>
     					<th></th>
-    				</tr>	
+    				</tr>
+    			</thead>	
     			<c:forEach items = "${productList}" var = "product">
 	    			<tr>
-	    				<spring:url value = "/products/productDetails/${product.productId}" var="url" htmlEscape="true"/>
-	    				<td><img src = "<c:url value = "/resources/images/${product.productId}.png" /> " alt = "image" style="width: 100%;height: 300px;" /></td>
+	    				<spring:url value = "/product/productDetails/${product.productId}" var="url" htmlEscape="true"/>
+	    				<td><img src="<c:url value="/resources/images/${product.productId}.png" /> " alt="image"
+                             style="width:50%"/></td>
 	    				<td>${product.productName}</td>
 	    				<td>${product.productCategory}</td>
 	    				<td>${product.productCondition}</td>

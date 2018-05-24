@@ -9,7 +9,7 @@
     			
     			<p class = "lead">Fill the form below to add a new product.</p>
     		</div>
-    		<form:form action = "${pageContext.request.contextPath}/admin/productInventory/addProduct" method = "POST" modelAttribute = "product" enctype="multipart/form-data">
+    		<form:form action = "${pageContext.request.contextPath}/admin/product/addProduct" method = "POST" modelAttribute = "product" enctype="multipart/form-data">
     			
     			<div class  = "form-group">
     				<label for = "name">Name</label><br><form:errors path = "productName" cssStyle="color:#ff0000"/>
@@ -20,15 +20,14 @@
     				<label for = "category">Category</label>
     				
     				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productCategory" id = "category" value = "instrument"/>Instrument
-    				</label>
-    				
-    				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productCategory" id = "category" value = "record"/>Record
-    				</label>
-    				
-    				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productCategory" id = "category" value = "accessory"/>Accessory
+    				<form:select path = "productCategory" id = "productCategory" class = "form-control">
+    					<form:option value = "select">select</form:option>
+    					<form:option value = "electronics">electronics</form:option>
+    					<form:option value = "apparels">apparels</form:option>
+    					<form:option value = "decorations">decorations</form:option>
+    					<form:option value = "mens">mens</form:option>
+    					<form:option value = "womens">womens</form:option>
+    				</form:select>
     				</label>
     			</div>
     			
@@ -46,11 +45,13 @@
     				<label for = "condition">Condition</label>
     				
     				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productCondition" id = "condition" value = "new"/>Instrument
+    				<form:radiobutton path = "productCondition" id = "condition" value = "New"/>New
     				</label>
-    				
     				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productCondition" id = "condition" value = "refurbished"/>Record
+    				<form:radiobutton path = "productCondition" id = "condition" value = "Old"/>Old
+    				</label>
+    				<label class = "checkbox-inline">
+    				<form:radiobutton path = "productCondition" id = "condition" value = "Refurbished"/>Refurbished
     				</label>
     			</div>
     			
@@ -58,11 +59,11 @@
     				<label for = "status">Status</label>
     				
     				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productStatus" id = "status" value = "available"/>available
+    				<form:radiobutton path = "productStatus" id = "status" value = "In Stock"/>In Stock
     				</label>
     				
     				<label class = "checkbox-inline">
-    				<form:radiobutton path = "productStatus" id = "status" value = "not-available"/>not-available
+    				<form:radiobutton path = "productStatus" id = "status" value = "Out Of Stock"/>Out Of Stock
     				</label>
     			</div>
     			
@@ -72,7 +73,7 @@
     			</div>
     			
     			<div class  = "form-group">
-    				<label for = "manufacturer">Manufucturer</label><br><form:errors path = "productManufacturer" cssStyle="color:#ff0000"/>
+    				<label for = "manufacturer">Manufacturer</label><br><form:errors path = "productManufacturer" cssStyle="color:#ff0000"/>
     				<form:input path = "productManufacturer" id = "manufacturer" class = "form-control"></form:input>
     			</div>
     			
@@ -83,7 +84,7 @@
     			<br><br>
 <%--     			<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> --%>
     			<input type = "submit" value = "submit" class = "btn btn-primary"/>
-    			<a href = "<c:url value = "/admin/productInventory" />" class = "btn btn-default">Cancel</a>
+    			<a href = "<c:url value = "/admin/addProduct" />" class = "btn btn-default">Cancel</a>
     		</form:form>
     		
    <%@include file = "/WEB-INF/views/templates/footer.jsp" %>
