@@ -5,9 +5,9 @@
     <div class="container-wrapper">
     	<div class = "container">
     		<div class = "page-header">
-    			<h1>Add product</h1>
+    			<h1>Register</h1>
     			
-    			<p class = "lead">Fill the form below to add a new product.</p>
+    			<p class = "lead">Customer Registration.</p>
     		</div>
     		<form:form action = "${pageContext.request.contextPath}/register" method = "POST" modelAttribute = "customer">
     			
@@ -23,7 +23,7 @@
     			
     			<div class  = "form-group">
     				<label for = "contact number">contact number</label><br><form:errors path = "customerPhone" cssStyle="color:#ff0000"/>
-    				<form:input path = "customerPhone" id = "name" customerPhone = "form-control"></form:input>
+    				<form:input path = "customerPhone" id = "customerPhone"  class= "form-control"></form:input>
     			</div>
     			
     			<div class  = "form-group">

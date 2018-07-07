@@ -27,10 +27,22 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Cart cart;
 	
+	public Cart getCart() {
+		return cart;
+	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 	@ManyToOne
 	@JoinColumn(name = "productId")
 	private Product product;
 	
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 	private int quantity;
 	private double totalPrice;
 	

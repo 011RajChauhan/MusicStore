@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -34,6 +35,7 @@ import com.emusicstore.models.Users;
 
 @Configuration
 @EnableWebMvc
+@EnableWebSecurity
 @ComponentScan("com.emusicstore.*")
 //annotation to enable transaction, xml equivalent to <tx:annotation-driven>
 @EnableTransactionManagement
@@ -62,9 +64,9 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 		 
 		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		 dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		 dataSource.setUrl("jdbc:mysql://localhost:3306/mylocaldb");
+		 dataSource.setUrl("jdbc:mysql://localhost:3306/emusicstore");
 		 dataSource.setUsername("root");
-		 dataSource.setPassword("12345");
+		 dataSource.setPassword("r@dm09d");
 		 
 		 return dataSource;
 	 }
