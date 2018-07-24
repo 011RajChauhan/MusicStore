@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.emusicstore.models.Customer;
 import com.emusicstore.models.Product;
+import com.emusicstore.services.CustomerService;
 import com.emusicstore.services.ProductService;
 
 @Controller
@@ -29,6 +31,9 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	private Path path;
 	
@@ -49,7 +54,12 @@ public class AdminController {
 		model.addAttribute("product", getProductDefaultValues());
 		return "addProduct";
 	}
-	
+	@RequestMapping("/viewCustomers")
+	public String viewCustomersList(Model model) {
+		List<Customer>customersList = customerService.getCustomersList();
+		model.addAttribute("customersList",customersList);
+		return "customersList";
+	}
 	@RequestMapping(value = "/product/addProduct", method = RequestMethod.POST)
 	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, HttpServletRequest request) {
 		
@@ -60,12 +70,12 @@ public class AdminController {
 		productService.addProduct(product);
 		
 		MultipartFile productImage = product.getProductImage();
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-		path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
+		//String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+		//path = Paths.get(rootDirectory+"\\WEB-INF\\resources\\images\\"+product.getProductId()+".png");
 		
 		if(productImage != null && !productImage.isEmpty()) {
 			try {
-				productImage.transferTo(new File(path.toString()));
+				productImage.transferTo(new File("/resources/images/"+productImage.getOriginalFilename()));
 			} catch(Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException("product image saving failed "+e);

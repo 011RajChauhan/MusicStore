@@ -64,15 +64,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		return (Customer)session.get(Customer.class, customerId);
 	}
 
-	@Override
-	public List<Customer> getAllCustomers() {
-		
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Customer");
-		List<Customer> customerList = query.list();
-		return customerList;
-	}
-
+	
 	@Override
 	public Customer getCustomerByUserName(String userName) {
 		
@@ -81,6 +73,14 @@ public class CustomerDaoImpl implements CustomerDao{
 		Query query = session.createQuery("from Customer where username = ? ");
 		query.setString(0, userName);
 		return (Customer)query.uniqueResult();
+	}
+
+	@Override
+	public List<Customer> getCustomersList() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Customer");
+		List<Customer> customerList = query.list();
+		return customerList;
 	}
 
 }

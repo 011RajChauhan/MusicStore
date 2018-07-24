@@ -6,18 +6,16 @@
 			<section>
 				<div class = "jumbotron">
 					<div class = "container">
-						<h1>Registration Successfull</h1>
+						<h1>Thanks for you purchase from Raj's eMusic store.</h1>
+						<p>Your order will be shipped in two business days!</p>
 					</div>
 				</div>
 			</section>
-			<section class = "container" data-ng-app = 'cartApp'>
-				<div>
-                    <p>Hi ${ customerName} your registration is Successfull.</p>
-                </div>
-				<a href = "<spring:url value = "/products" />" class = "btn btn-default">let's shop</a>
-				</div>
+			<section class = "container">
+				<p>
+				<a href = "<spring:url value = "/" />" class = "btn btn-default">home</a>
+				</p>
 			</section>
 		</div>
 	</div>
-<script src = "<c:url value = "/resources/js/controller.js" /> "></script>
 <%@include file = "/WEB-INF/views/templates/footer.jsp" %>

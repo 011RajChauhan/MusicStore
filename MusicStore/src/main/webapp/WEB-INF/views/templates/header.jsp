@@ -21,7 +21,12 @@
    <!--  <link href="<c:url value = "/resources/css/main.css"/>" rel="stylesheet">  -->
 	<!-- crousel css file -->
     <link href="<c:url value = "/resources/css/carousel.css"/>" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/controller.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	
     
   </head>
 <!-- NAVBAR
@@ -44,7 +49,7 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="<c:url value = "/home" />" >Home</a></li>
-                <li><a href="<c:url value = "/product/productList" />" >Products</a></li>
+                <li><a href="<c:url value = "/product/productList/all" />" >Products</a></li>
                 <li><a href="<c:url value = "#" /> ">Contact</a></li>
               </ul>
               <ul class = "nav navbar-nav pull-right">
@@ -68,4 +73,4 @@
         </nav>
 
       </div>
-    </div>
+    </div><br><br>

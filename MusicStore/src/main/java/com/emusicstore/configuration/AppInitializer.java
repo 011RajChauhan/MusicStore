@@ -1,5 +1,6 @@
 package com.emusicstore.configuration;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
@@ -21,8 +23,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.emusicstore.dao.CartDao;
-import com.emusicstore.dao.impl.CartDaoImpl;
 import com.emusicstore.models.Authorities;
 import com.emusicstore.models.BillingAddress;
 import com.emusicstore.models.Cart;
@@ -114,9 +114,11 @@ public class AppInitializer  extends WebMvcConfigurerAdapter {
 	 }
 	 
 	 @Bean(name = "multipartResolver")
-	 public CommonsMultipartResolver mulitpartResolver() {
+	 public CommonsMultipartResolver mulitpartResolver() throws IOException {
 		 CommonsMultipartResolver fileResolver = new CommonsMultipartResolver();
+		 fileResolver.setUploadTempDir(new FileSystemResource("/resources/images"));
 		 fileResolver.setMaxUploadSize(1024000);
+		 fileResolver.setMaxInMemorySize(0);
 		 return fileResolver;
 		 
 	 }
